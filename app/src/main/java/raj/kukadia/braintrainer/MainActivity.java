@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -16,10 +17,73 @@ public class MainActivity extends AppCompatActivity {
     Button startButton;
     int locationOfAnswer;
     int incorrectAns;
-    ArrayList<Integer>  answers;
+    int currentScore;
+    TextView comment;
+    int totalScore;
+    GridLayout gridLayout;
+    Button button0;
+    Button button1;
+    Button button2;
+    Button button3;
+    TextView score;
+    ArrayList<Integer>  answers = new ArrayList<>();
+    TextView equation;
 
 
     public void chooseAnswer(View v){
+        if(v.getTag().toString().equals(Integer.toString(locationOfAnswer))){
+            setBoard("Correct");
+            setScore(1);
+        }else{
+            setBoard("Wrong");
+            setScore(0);
+
+        }
+
+    }
+
+    public void setScore(int i){
+        currentScore+=i;
+        totalScore++;
+        String s = currentScore + "/" + totalScore;
+        score.setText(s);
+    }
+
+
+
+    public void startGame(View v){
+        startButton.setVisibility(View.INVISIBLE);
+        gridLayout.setVisibility(View.VISIBLE);
+    }
+
+    public void setBoard(String s){
+        comment.setText(s);
+        answers.clear();
+        Random rand = new Random();
+
+        int a = rand.nextInt(21);
+        int b = rand.nextInt(21);
+
+        equation.setText(Integer.toString(a) + "+" + Integer.toString(b) );
+
+        locationOfAnswer = rand.nextInt(4);
+
+        for(int i = 0; i<4; i++){
+            if(i == locationOfAnswer){
+                answers.add(a+b);
+            }else{
+                incorrectAns = rand.nextInt(41);
+                while(incorrectAns == a+b){
+                    incorrectAns = rand.nextInt(41);
+                }
+                answers.add(incorrectAns);
+            }
+        }
+
+        button0.setText(Integer.toString(answers.get(0)));
+        button1.setText(Integer.toString(answers.get(1)));
+        button2.setText(Integer.toString(answers.get(2)));
+        button3.setText(Integer.toString(answers.get(3)));
 
     }
 
@@ -30,31 +94,24 @@ public class MainActivity extends AppCompatActivity {
 
         startButton = findViewById(R.id.start);
         TextView timmer = findViewById(R.id.timmer);
-        TextView score = findViewById(R.id.score);
-        TextView equation = findViewById(R.id.equation);
+        score = findViewById(R.id.score);
+        equation = findViewById(R.id.equation);
+         button0 = findViewById(R.id.button1);
+        button1 = findViewById(R.id.button2);
+        button2 = findViewById(R.id.button3);
+         button3 = findViewById(R.id.button4);
+         comment = findViewById(R.id.answer);
+        gridLayout = findViewById(R.id.sumTextView);
+        currentScore = 0;
+        totalScore = 0;
+        score.setText("0/0");
 
+    }
 
-        Random rand = new Random();
-
-        int a = rand.nextInt(21);
-        int b = rand.nextInt(21);
-
-        equation.setText(Integer.toString(a) + "+" + Integer.toString(b) );
-
-        locationOfAnswer = rand.nextInt(4);
-        incorrectAns = rand.nextInt(41);
-
-        for(int i = 0; i<4; i++){
-            if(i == locationOfAnswer){
-                answers.add(a+b);
-            }else{
-                while(incorrectAns == a+b){
-                    incorrectAns = rand.nextInt(41);
-                }
-                answers.add(incorrectAns);
-            }
-        }
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setBoard("Good luck");
+        comment.setVisibility(View.VISIBLE);
     }
 }
