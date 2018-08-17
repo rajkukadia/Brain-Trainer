@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context="raj.kukadia.braintrainer.MainActivity">
 
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/start"
+      android:text="GO"
+      android:textSize="50sp"
+      android:layout_centerInParent="true"
+      android:gravity="fill"
+      />
+
   <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -40,6 +50,7 @@
       android:id="@+id/sumTextView"
       android:layout_below="@id/equation"
       android:layout_above="@id/answer"
+      android:visibility="gone"
       >
 
     <Button
@@ -108,7 +119,6 @@
         android:gravity="center"
         android:textSize="40sp"
         android:layout_alignParentBottom="true"
-        android:text="WRONG"
         android:layout_centerHorizontal="true"
         />
 </RelativeLayout>
