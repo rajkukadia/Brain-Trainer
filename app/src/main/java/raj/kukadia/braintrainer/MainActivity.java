@@ -1,5 +1,6 @@
 package raj.kukadia.braintrainer;
 
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     int locationOfAnswer;
     int incorrectAns;
     int currentScore;
+    TextView timmer;
     TextView comment;
     int totalScore;
     GridLayout gridLayout;
@@ -54,6 +56,26 @@ public class MainActivity extends AppCompatActivity {
     public void startGame(View v){
         startButton.setVisibility(View.INVISIBLE);
         gridLayout.setVisibility(View.VISIBLE);
+        startTimer();
+        setBoard("Good luck");
+    }
+
+    public void startTimer(){
+        new CountDownTimer(30100, 1000){
+
+            @Override
+            public void onTick(long l) {
+                timmer.setText(String.valueOf(l/1000)+"s");
+            }
+
+            @Override
+            public void onFinish() {
+                timmer.setText("0s");
+                gridLayout.setVisibility(View.INVISIBLE);
+                comment.setText("done");
+                startButton.setVisibility(View.VISIBLE);
+            }
+        }.start();
     }
 
     public void setBoard(String s){
@@ -93,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         startButton = findViewById(R.id.start);
-        TextView timmer = findViewById(R.id.timmer);
+        timmer = findViewById(R.id.timmer);
         score = findViewById(R.id.score);
         equation = findViewById(R.id.equation);
          button0 = findViewById(R.id.button1);
@@ -104,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
         gridLayout = findViewById(R.id.sumTextView);
         currentScore = 0;
         totalScore = 0;
+        timmer.setText("00:00");
         score.setText("0/0");
 
     }

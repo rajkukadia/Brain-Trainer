@@ -21,7 +21,6 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:id="@+id/timmer"
-      android:text="00:00"
       android:textSize="40sp"
       android:layout_alignParentLeft="true"
       android:layout_alignParentStart="true"
